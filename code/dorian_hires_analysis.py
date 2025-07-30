@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from hires_analysis import stations
 
 
 file_7_14 = "C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-14.csv"
@@ -62,6 +63,7 @@ st_72_7_24 = ("14:45:40", "15:10:00")
 st_86_7_24 = ("15:13:42", "15:32:23")
 st_96_7_24 = ("15:36:19", "15:53:12")
 
+
 def find_mean_day_1(street):
     time = time_day_1
     startIndex = time[time == street[0]].index.values[0]
@@ -71,7 +73,6 @@ def find_mean_day_1(street):
     print("Day 1:", mean)
     
     plt.violinplot(ref[startIndex:endIndex])
-    plt.show()
     
     return mean
 
@@ -84,7 +85,6 @@ def find_mean_day_2(street):
     print("Day 2:", mean)
     
     plt.violinplot(ref[startIndex:endIndex])
-    plt.show()
     
     return mean
 
@@ -97,7 +97,6 @@ def find_mean_day_3(street):
     print("Day 3:", mean)
     
     plt.violinplot(ref[startIndex:endIndex])
-    plt.show()
     
     return mean
 
@@ -110,9 +109,24 @@ def find_mean_day_4(street):
     print("Day 4:", mean)
     
     plt.violinplot(ref[startIndex:endIndex])
-    plt.show()
     
     return mean
+
+# mean_data = {"125th st 7/14": find_mean_day_1(st_125_7_14),
+#              "42nd st Port Authority 7/14": find_mean_day_1(st_42_portauthority_7_14),
+#              "Barclay Center 7/14": find_mean_day_1(barclayCenter_7_14),
+#              "125th st Bryant Park 7/15": find_mean_day_2(st_125_bryantpark_7_15),
+#              "42nd st Bryant Park 7/15": find_mean_day_2(st_42_bryantpark_7_15),
+#              "74th st 7/15": find_mean_day_2(st_74_7_15),
+#              "Court Square 7/15": find_mean_day_2(courtsquare_7_15),
+#              "Fulton 7/15": find_mean_day_2(fulton_7_15),
+#              "137th st 7/16": find_mean_day_3(st_137_7_16),
+#              "225th st 7/16": find_mean_day_3(st_225_7_16),
+#              "242nd st 7/16": find_mean_day_3(st_242_7_16),
+#              "72nd st 7/24": find_mean_day_4(st_72_7_24),
+#              "86th st 7/24": find_mean_day_4(st_86_7_24),
+#              "96th st 7/24": find_mean_day_4(st_96_7_24)}
+
 
 mean_data = {"125th st 7/14": find_mean_day_1(st_125_7_14),
              "42nd st Port Authority 7/14": find_mean_day_1(st_42_portauthority_7_14),
@@ -128,9 +142,3 @@ mean_data = {"125th st 7/14": find_mean_day_1(st_125_7_14),
              "72nd st 7/24": find_mean_day_4(st_72_7_24),
              "86th st 7/24": find_mean_day_4(st_86_7_24),
              "96th st 7/24": find_mean_day_4(st_96_7_24)}
-
-
-
-print(mean_data)
-
-
