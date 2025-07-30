@@ -15,36 +15,57 @@ july16_data = pd.read_csv(filename3)
 filename4 = "1379_2025-7-24.csv"
 july24_data = pd.read_csv(filename4)
 
-
-stations = {
+day1 = {
     "st_125" : ("13:47:02", '13:59:47'),
     "st_42_portauthority" : ("14:21:45", "14:34:36"),
     "barclayCenter" : ("15:09:36", "15:20:06"),
-    # day 2
+}
+
+day2 = {
     "st_125_2" : ("13:01:17", "13:33:56" ),
     "st_42_bryantpark" : ("13:49:03", "14:22:04"),
     "st_74" : ("14:50:19", "15:23:05"),
     "courtsquare" : ("15:31:27", "15:52:04"),
     "fulton" : ("16:12:29", "16:22:27"),
-    # day 3
+}
+
+day3 = {
     "st_137" : ("13:32:38", "13:52:25"),
     "st_225" : ("14:10:31", "18:20:30"),
     "st_242" : ("18:28:43", "18:36:34"),
 }
 
-
+day4 = {
+    "st_72_7_24": ("14:45:40", "15:10:00"),
+    "st_86_7_24": ("15:13:42", "15:32:23"),
+    "st_96_7_24": ("15:36:19", "15:53:12")
+}
 
 def get_pm25(data, station):
     pm25 = data["PM2.5"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
     sub_pm25 = pm25[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_pm25, sub_time
+
+def get_all_pm25(data, stations):
+    all_pm25 = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        pm25, time = get_pm25(data, (start_time, end_time))
+
+        if len(pm25) > 0:
+            all_pm25.append(pm25.values)
+            all_time.append(time.values)
+
+    return all_pm25, all_time
+
 
 
 
@@ -146,11 +167,9 @@ def calculate_heat_index(data):
     return hi
 
 def plot_tempandheat1():
-
-
     fig, ax = plt.subplots()
 
-    for station_name, (start_time, end_time) in stations.items():
+    for station_name, (start_time, end_time) in day1.items():
 
         station_data = july14_data[(july14_data['Time'] >= start_time) & (july14_data['Time'] <= end_time)]
 
@@ -178,7 +197,7 @@ def plot_tempandheat1():
 def plot_tempandheat2():
     fig, ax = plt.subplots()
 
-    for station_name, (start_time, end_time) in stations.items():
+    for station_name, (start_time, end_time) in day2.items():
 
         station_data = july15_data[(july15_data['Time'] >= start_time) & (july15_data['Time'] <= end_time)]
 
@@ -202,11 +221,9 @@ def plot_tempandheat2():
     plt.show()
 
 def plot_tempandheat3():
-
-
     fig, ax = plt.subplots()
 
-    for station_name, (start_time, end_time) in stations.items():
+    for station_name, (start_time, end_time) in day3.items():
 
         station_data = july16_data[(july16_data['Time'] >= start_time) & (july16_data['Time'] <= end_time)]
 
@@ -230,15 +247,9 @@ def plot_tempandheat3():
     plt.show()
 
 def plot_tempandheat4():
-    stations = {
-        "st_72_7_24" : ("14:45:40", "15:10:00"),
-        "st_86_7_24" : ("15:13:42", "15:32:23"),
-        "st_96_7_24" : ("15:36:19", "15:53:12")
-    }
-
     fig, ax = plt.subplots()
 
-    for station_name, (start_time, end_time) in stations.items():
+    for station_name, (start_time, end_time) in day4.items():
 
         station_data = july24_data[(july24_data['Time'] >= start_time) & (july24_data['Time'] <= end_time)]
 
@@ -262,26 +273,13 @@ def plot_tempandheat4():
     plt.show()
 
 
-def plot_pm25_by_station(data):
+def plot_pm25_by_station(data, day):
     plt.figure(figsize=(10,6))
 
-    st_125_start, st_125_end = "13:47:02", "13:59:47"
-    data_125 = data[(data['Time'] >= st_125_start) & (data['Time'] <= st_125_end)]
-    if not data_125.empty:
-        plt.plot(data_125['Time'], data_125['PM2.5'], label='125th St')
+    all_pm25, all_time = get_all_pm25(data, day)
 
-
-    st_42_start, st_42_end = "14:21:45", "14:34:36"
-    data_42 = data[(data['Time'] >= st_42_start) & (data['Time'] <= st_42_end)]
-    if not data_42.empty:
-        plt.plot(data_42['Time'], data_42['PM2.5'], label='42nd St Port Authority')
-
-
-    barclay_start, barclay_end = "15:09:36", "15:20:06"
-    data_barclay = data[(data['Time'] >= barclay_start) & (data['Time'] <= barclay_end)]
-    if not data_barclay.empty:
-        plt.plot(data_barclay['Time'], data_barclay['PM2.5'], label='Barclay Center')
-
+    for (station_name, _), pm25_vals, time_vals in zip(day.items(), all_pm25, all_time):
+        plt.plot(time_vals, pm25_vals, label=station_name)
 
     plt.title('PM2.5 Levels at Subway Stations')
     plt.xlabel('Time')
@@ -292,29 +290,4 @@ def plot_pm25_by_station(data):
     plt.show()
 
 
-def plot_carbonDixiode(data):
-        plt.figure(figsize=(10, 6))
-
-        st_125_start, st_125_end = "13:47:02", "13:59:47"
-        data_125 = data[(data['Time'] >= st_125_start) & (data['Time'] <= st_125_end)]
-        if not data_125.empty:
-            plt.plot(data_125['Time'], data_125['C02'], label='125th St')
-
-        st_42_start, st_42_end = "14:21:45", "14:34:36"
-        data_42 = data[(data['Time'] >= st_42_start) & (data['Time'] <= st_42_end)]
-        if not data_42.empty:
-            plt.plot(data_42['Time'], data_42['C02'], label='42nd St Port Authority')
-
-        barclay_start, barclay_end = "15:09:36", "15:20:06"
-        data_barclay = data[(data['Time'] >= barclay_start) & (data['Time'] <= barclay_end)]
-        if not data_barclay.empty:
-            plt.plot(data_barclay['Time'], data_barclay['C02'], label='Barclay Center')
-
-        plt.title('C02 levels')
-        plt.xlabel('Time')
-        plt.ylabel('C02')
-        plt.xticks(rotation=45)
-        plt.legend()
-        plt.tight_layout()
-        plt.show()
-
+plot_pm25_by_station(july16_data, day3)
