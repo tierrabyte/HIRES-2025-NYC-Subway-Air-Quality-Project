@@ -3,192 +3,115 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 
-
-#rename data variables to date ex: july14_data or data_07_14_25 etc.
 filename = "1379_2025-7-14 (1).csv"
-data = pd.read_csv(filename) 
+july14_data = pd.read_csv(filename)
 
 filename2 = "1379_2025-7-15.csv"
-data1 = pd.read_csv(filename2)
+july15_data = pd.read_csv(filename2)
 
 filename3 = "1379_2025-7-16.csv"
-data2 = pd.read_csv(filename3)
+july16_data = pd.read_csv(filename3)
 
 filename4 = "1379_2025-7-24.csv"
-data3 = pd.read_csv(filename4)
+july24_data = pd.read_csv(filename4)
 
 
-# day 1
-st_125 = ("13:47:02", '13:59:47')
-st_42_portauthority = ("14:21:45", "14:34:36")
-barclayCenter = ("15:09:36", "15:20:06")
-# day 2
-st_125_2 = ("13:01:17", "13:33:56" )
-st_42_bryantpark = ("13:49:03", "14:22:04")
-st_74 = ("14:50:19", "15:23:05")
-courtsquare = ("15:31:27", "15:52:04")
-fulton = ("16:12:29", "16:22:27")
-# day 3
-st_137 = ("13:32:38", "13:52:25")
-st_225 = ("14:10:31", "18:20:30")
-st_242 = ("18:28:43", "18:36:34")
+stations = {
+    "st_125" : ("13:47:02", '13:59:47'),
+    "st_42_portauthority" : ("14:21:45", "14:34:36"),
+    "barclayCenter" : ("15:09:36", "15:20:06"),
+    # day 2
+    "st_125_2" : ("13:01:17", "13:33:56" ),
+    "st_42_bryantpark" : ("13:49:03", "14:22:04"),
+    "st_74" : ("14:50:19", "15:23:05"),
+    "courtsquare" : ("15:31:27", "15:52:04"),
+    "fulton" : ("16:12:29", "16:22:27"),
+    # day 3
+    "st_137" : ("13:32:38", "13:52:25"),
+    "st_225" : ("14:10:31", "18:20:30"),
+    "st_242" : ("18:28:43", "18:36:34"),
+}
 
 
-#remake identify_() functions, example below
-'''
+
 def get_pm25(data, station):
-    pm25 = data[pm2.5]
-    time = data[time]
+    pm25 = data["PM2.5"]
+    time = data["Time"]
 
     startindex = time[time == station[0]]
     endindex = time[time == station[1]]
 
-    sub_pm25 = pm25[start : end]
-    sub_time = time[start : end]
+    sub_pm25 = pm25[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
     return sub_pm25, sub_time
 
-'''
-def identify_PM25(data):
-    col = data['PM2.5'].dropna()
-    time = data['Time'].dropna()
-
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
-
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
-
-    print(startIndex)
-    print(endIndex)
-
-    plt.plot(subtime, subcolumn, 'r-o', label="PM2.5")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Concentration")
-    plt.grid(True)
-    plt.show()
 
 
-def identify_carbonDioxide():
-    data = pd.read_csv(filename)
-    col = data['C02'].dropna()
-    time = data['Time'].dropna()
+def get_carbonDioxide(data, station):
+    carbon = data["C02"]
+    time = data["Time"]
 
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
 
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
+    sub_carbon = carbon[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
-    print(startIndex)
-    print(endIndex)
-
-    plt.plot(subtime, subcolumn, 'r-o', label="CO2")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Concentration")
-    plt.grid(True)
-    plt.show()
+    return sub_carbon, sub_time
 
 
-def identify_PM10():
-    data = pd.read_csv(filename)
-    col = data['PM10'].dropna()
-    time = data['Time'].dropna()
+def get_pm10(data, station):
+    pm10 = data["PM10"]
+    time = data["Time"]
 
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
 
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
+    sub_pm10 = pm10[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
-    print(startIndex)
-    print(endIndex)
+    return sub_pm10, sub_time
 
-    plt.plot(subtime, subcolumn, 'r-o', label="PM1")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Concentration")
-    plt.grid(True)
-    plt.show()
+def get_pm1(data, station):
+    pm1 = data["PM1"]
+    time = data["Time"]
 
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
 
-def identify_PM1():
-    data = pd.read_csv(filename)
-    col = data['PM1'].dropna()
-    time = data['Time'].dropna()
+    sub_pm1 = pm1[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
+    return sub_pm1, sub_time
 
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
+def get_relhum(data, station):
+    relhum = data["RELHUM"]
+    time = data["Time"]
 
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
 
-    print(startIndex)
-    print(endIndex)
+    sub_relhum = relhum[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
-    plt.plot(subtime, subcolumn, 'r-o', label="PM1")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Concentration")
-    plt.grid(True)
-    plt.show()
+    return sub_relhum, sub_time
 
+def get_pressure(data, station):
+    pressure = data["PRES(HPA)"]
+    time = data["Time"]
 
-def identify_Relhum():
-    data = pd.read_csv(filename)
-    col = data['RELHUM'].dropna()
-    time = data['Time'].dropna()
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
 
+    sub_pressure = pressure[startindex : endindex]
+    sub_time = time[startindex : endindex]
 
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
-
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
-
-    print(startIndex)
-    print(endIndex)
-
-    plt.plot(subtime, subcolumn, 'r-o', label="Relative Humidity")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Relative Humidity")
-    plt.grid(True)
-    plt.show()
-
-
-def identify_Pressure():
-    data = pd.read_csv(filename)
-    col = data['PRES(HPA)'].dropna()
-    time = data['Time'].dropna()
-
-
-    startIndex = time[time == st_125[0]].index.values[0]
-    endIndex = time[time == st_125[1]].index.values[0]
-
-    subcolumn = col[startIndex: endIndex]
-    subtime = time[startIndex: endIndex]
-
-    print(startIndex)
-    print(endIndex)
-
-    plt.plot(subtime, subcolumn, 'r-o', label="Pressure (HPA)")
-    plt.xticks(fontsize=10, rotation=45)
-    plt.xlabel("Time")
-    plt.ylabel("Concentration")
-    plt.grid(True)
-    plt.show()
-
+    return sub_pressure, sub_time
 
 def calculate_heat_index(data):
     temp_c = data['TEMP©'].dropna()
     rh = data['RELHUM'].dropna()
-
-    # Align the Series by index (in case one was dropped and the other wasn't)
-
 
     temp_f = (temp_c * 9 / 5) + 32
 
@@ -223,18 +146,13 @@ def calculate_heat_index(data):
     return hi
 
 def plot_tempandheat1():
-    #stations already defined in top of code, convert the one in top in dict fornat like you have below
-    stations = {
-        '125th St': ("13:47:02", '13:59:47'),
-        '42nd St Port Authority': ("14:21:45", "14:34:36"),
-        'Barclay Center': ("15:09:36", "15:20:06")
-    }
+
 
     fig, ax = plt.subplots()
 
     for station_name, (start_time, end_time) in stations.items():
 
-        station_data = data[(data['Time'] >= start_time) & (data['Time'] <= end_time)]
+        station_data = july14_data[(july14_data['Time'] >= start_time) & (july14_data['Time'] <= end_time)]
 
         if station_data.empty:
             print(f"No data for {station_name} in given time range")
@@ -257,11 +175,95 @@ def plot_tempandheat1():
     plt.show()
 
 
-def plot_pm25_by_station(data):
-    #similar to your plot_tempandheat1() func plot the pm2.5 data in a for loop parsing through all items in station dict
-    
-    plt.figure(figsize=(10,6))
+def plot_tempandheat2():
+    fig, ax = plt.subplots()
 
+    for station_name, (start_time, end_time) in stations.items():
+
+        station_data = july15_data[(july15_data['Time'] >= start_time) & (july15_data['Time'] <= end_time)]
+
+        if station_data.empty:
+            print(f"No data for {station_name} in given time range")
+            continue
+
+        time = station_data['Time']
+        temp = (station_data['TEMP©'] * 9 / 5) + 32
+        heatIndex = calculate_heat_index(station_data)
+
+        ax.plot(time, temp, label=f'{station_name} Temp ')
+        ax.plot(time, heatIndex, linestyle='--', label=f'{station_name} Heat Index')
+
+    ax.set_title('Temperature and Heat Index at Subway Stations')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Value')
+    ax.legend()
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+def plot_tempandheat3():
+
+
+    fig, ax = plt.subplots()
+
+    for station_name, (start_time, end_time) in stations.items():
+
+        station_data = july16_data[(july16_data['Time'] >= start_time) & (july16_data['Time'] <= end_time)]
+
+        if station_data.empty:
+            print(f"No data for {station_name} in given time range")
+            continue
+
+        time = station_data['Time']
+        temp = (station_data['TEMP©'] * 9 / 5) + 32
+        heatIndex = calculate_heat_index(station_data)
+
+        ax.plot(time, temp, label=f'{station_name} Temp ')
+        ax.plot(time, heatIndex, linestyle='--', label=f'{station_name} Heat Index')
+
+    ax.set_title('Temperature and Heat Index at Subway Stations')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Value')
+    ax.legend()
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+def plot_tempandheat4():
+    stations = {
+        "st_72_7_24" : ("14:45:40", "15:10:00"),
+        "st_86_7_24" : ("15:13:42", "15:32:23"),
+        "st_96_7_24" : ("15:36:19", "15:53:12")
+    }
+
+    fig, ax = plt.subplots()
+
+    for station_name, (start_time, end_time) in stations.items():
+
+        station_data = july24_data[(july24_data['Time'] >= start_time) & (july24_data['Time'] <= end_time)]
+
+        if station_data.empty:
+            print(f"No data for {station_name} in given time range")
+            continue
+
+        time = station_data['Time']
+        temp = (station_data['TEMP©'] * 9 / 5) + 32
+        heatIndex = calculate_heat_index(station_data)
+
+        ax.plot(time, temp, label=f'{station_name} Temp ')
+        ax.plot(time, heatIndex, linestyle='--', label=f'{station_name} Heat Index')
+
+    ax.set_title('Temperature and Heat Index at Subway Stations')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Value')
+    ax.legend()
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_pm25_by_station(data):
+    plt.figure(figsize=(10,6))
 
     st_125_start, st_125_end = "13:47:02", "13:59:47"
     data_125 = data[(data['Time'] >= st_125_start) & (data['Time'] <= st_125_end)]
@@ -291,7 +293,6 @@ def plot_pm25_by_station(data):
 
 
 def plot_carbonDixiode(data):
-        #similar to your plot_tempandheat1() func plot the pm2.5 data in a for loop parsing through all items in station dict
         plt.figure(figsize=(10, 6))
 
         st_125_start, st_125_end = "13:47:02", "13:59:47"
@@ -317,5 +318,3 @@ def plot_carbonDixiode(data):
         plt.tight_layout()
         plt.show()
 
-
-plot_tempandheat()
