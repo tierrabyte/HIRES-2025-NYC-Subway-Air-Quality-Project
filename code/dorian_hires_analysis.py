@@ -6,12 +6,13 @@ import numpy as np
 file_7_14 = "C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-14.csv"
 file_7_15 = "C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-15.csv"
 file_7_16 = "C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-16.csv"
+file_7_24 = "C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-24.csv"
 
 
 day_1 = pd.read_csv(file_7_14)
 day_2 = pd.read_csv(file_7_15)
 day_3 = pd.read_csv(file_7_16)
-# day_4 = pd.read_csv(file_7_24)
+day_4 = pd.read_csv(file_7_24)
 
 data = day_1
 pm10_day_1 = day_1['PM10'].dropna()
@@ -32,6 +33,13 @@ pm1_day_3 = day_3['PM1'].dropna()
 co_day_3 = day_3['CO'].dropna()
 time_day_3 = day_3['Time'].dropna()
 
+pm10_day_4 = day_4['PM10'].dropna()
+pm2_day_4 = day_4['PM2.5'].dropna()
+pm1_day_4 = day_4['PM1'].dropna()
+co_day_4 = day_4['CO'].dropna()
+time_day_4 = day_4['Time'].dropna()
+
+
 #day 1
 st_125_7_14 = ("13:47:02", "13:59:47")
 st_42_portauthority_7_14 = ("14:21:45" , "14:34:36")
@@ -50,8 +58,9 @@ st_225_7_16 = ("14:10:31", "18:20:30")
 st_242_7_16 = ("18:28:43", "18:36:34")
 
 #day 4
-
-
+st_72_7_24 = ("14:45:40", "15:10:00")
+st_86_7_24 = ("15:13:42", "15:32:23")
+st_96_7_24 = ("15:36:19", "15:53:12")
 
 def find_mean_day_1(street):
     time = time_day_1
@@ -60,6 +69,10 @@ def find_mean_day_1(street):
     ref = pm2_day_1
     mean = float(ref[startIndex:endIndex].mean().round(2))
     print("Day 1:", mean)
+    
+    plt.violinplot(ref[startIndex:endIndex])
+    plt.show()
+    
     return mean
 
 def find_mean_day_2(street):
@@ -69,6 +82,10 @@ def find_mean_day_2(street):
     ref = pm2_day_2
     mean = float(ref[startIndex:endIndex].mean().round(2))
     print("Day 2:", mean)
+    
+    plt.violinplot(ref[startIndex:endIndex])
+    plt.show()
+    
     return mean
 
 def find_mean_day_3(street):
@@ -78,6 +95,23 @@ def find_mean_day_3(street):
     ref = pm2_day_3
     mean = float(ref[startIndex:endIndex].mean().round(2))
     print("Day 3:", mean)
+    
+    plt.violinplot(ref[startIndex:endIndex])
+    plt.show()
+    
+    return mean
+
+def find_mean_day_4(street):
+    time = time_day_4
+    startIndex = time[time == street[0]].index.values[0]
+    endIndex = time[time == street[1]].index.values[0]
+    ref = pm2_day_4
+    mean = float(ref[startIndex:endIndex].mean().round(2))
+    print("Day 4:", mean)
+    
+    plt.violinplot(ref[startIndex:endIndex])
+    plt.show()
+    
     return mean
 
 mean_data = {"125th st 7/14": find_mean_day_1(st_125_7_14),
@@ -90,10 +124,13 @@ mean_data = {"125th st 7/14": find_mean_day_1(st_125_7_14),
              "Fulton 7/15": find_mean_day_2(fulton_7_15),
              "137th st 7/16": find_mean_day_3(st_137_7_16),
              "225th st 7/16": find_mean_day_3(st_225_7_16),
-             "242nd st 7/16": find_mean_day_3(st_242_7_16)}
+             "242nd st 7/16": find_mean_day_3(st_242_7_16),
+             "72nd st 7/24": find_mean_day_4(st_72_7_24),
+             "86th st 7/24": find_mean_day_4(st_86_7_24),
+             "96th st 7/24": find_mean_day_4(st_96_7_24)}
+
+
 
 print(mean_data)
-
-
 
 
