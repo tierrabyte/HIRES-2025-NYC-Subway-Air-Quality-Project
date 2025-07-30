@@ -3,8 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import math
 
+
+#rename data variables to date ex: july14_data or data_07_14_25 etc.
 filename = "1379_2025-7-14 (1).csv"
-data = pd.read_csv(filename)
+data = pd.read_csv(filename) 
 
 filename2 = "1379_2025-7-15.csv"
 data1 = pd.read_csv(filename2)
@@ -32,7 +34,21 @@ st_225 = ("14:10:31", "18:20:30")
 st_242 = ("18:28:43", "18:36:34")
 
 
+#remake identify_() functions, example below
+'''
+def get_pm25(data, station):
+    pm25 = data[pm2.5]
+    time = data[time]
 
+    startindex = time[time == station[0]]
+    endindex = time[time == station[1]]
+
+    sub_pm25 = pm25[start : end]
+    sub_time = time[start : end]
+
+    return sub_pm25, sub_time
+
+'''
 def identify_PM25(data):
     col = data['PM2.5'].dropna()
     time = data['Time'].dropna()
@@ -207,7 +223,7 @@ def calculate_heat_index(data):
     return hi
 
 def plot_tempandheat1():
-
+    #stations already defined in top of code, convert the one in top in dict fornat like you have below
     stations = {
         '125th St': ("13:47:02", '13:59:47'),
         '42nd St Port Authority': ("14:21:45", "14:34:36"),
@@ -242,6 +258,8 @@ def plot_tempandheat1():
 
 
 def plot_pm25_by_station(data):
+    #similar to your plot_tempandheat1() func plot the pm2.5 data in a for loop parsing through all items in station dict
+    
     plt.figure(figsize=(10,6))
 
 
@@ -273,6 +291,7 @@ def plot_pm25_by_station(data):
 
 
 def plot_carbonDixiode(data):
+        #similar to your plot_tempandheat1() func plot the pm2.5 data in a for loop parsing through all items in station dict
         plt.figure(figsize=(10, 6))
 
         st_125_start, st_125_end = "13:47:02", "13:59:47"
