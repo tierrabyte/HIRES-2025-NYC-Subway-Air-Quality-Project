@@ -67,68 +67,136 @@ def get_all_pm25(data, stations):
     return all_pm25, all_time
 
 
-
-
 def get_carbonDioxide(data, station):
-    carbon = data["C02"]
+    carbondioxide = data["C02"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
-    sub_carbon = carbon[startindex : endindex]
+    sub_carbon = carbondioxide[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_carbon, sub_time
+
+def get_all_carbonDioxide(data, stations):
+    all_carbonDioxide = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        carbon, time = get_carbonDioxide(data, (start_time, end_time))
+
+        if len(carbon) > 0:
+            all_carbonDioxide.append(carbon.values)
+            all_time.append(time.values)
+
+    return all_carbonDioxide, all_time
 
 
 def get_pm10(data, station):
     pm10 = data["PM10"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
     sub_pm10 = pm10[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_pm10, sub_time
 
+
+def get_all_pm10(data, stations):
+    all_pm10 = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        all_pm10, time = get_pm10(data, (start_time, end_time))
+
+        if len(all_pm10) > 0:
+            all_pm10.append(all_pm10.values)
+            all_time.append(time.values)
+
+    return all_pm10, all_time
+
+
 def get_pm1(data, station):
     pm1 = data["PM1"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
     sub_pm1 = pm1[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_pm1, sub_time
 
+def get_all_pm1(data, stations):
+    all_pm1 = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        all_pm1, time = get_pm1(data, (start_time, end_time))
+
+        if len(all_pm1) > 0:
+            all_pm1.append(all_pm1.values)
+            all_time.append(time.values)
+
+    return all_pm1, all_time
+
+
 def get_relhum(data, station):
     relhum = data["RELHUM"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
     sub_relhum = relhum[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_relhum, sub_time
 
+def get_all_relhum(data, stations):
+    all_relhum = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        all_relhum, time = get_relhum(data, (start_time, end_time))
+
+        if len(all_relhum) > 0:
+            all_relhum.append(all_relhum.values)
+            all_time.append(time.values)
+
+    return all_relhum, all_time
+
+
 def get_pressure(data, station):
     pressure = data["PRES(HPA)"]
     time = data["Time"]
 
-    startindex = time[time == station[0]]
-    endindex = time[time == station[1]]
+    startindex = time[time == station[0]].index.values[0]
+    endindex = time[time == station[1]].index.values[0]
 
     sub_pressure = pressure[startindex : endindex]
     sub_time = time[startindex : endindex]
 
     return sub_pressure, sub_time
+
+def get_all_pressure(data, stations):
+    all_pressure = []
+    all_time = []
+
+    for station_name, (start_time, end_time) in stations.items():
+        all_pressure, time = get_pressure(data, (start_time, end_time))
+
+        if len(all_pressure) > 0:
+            all_pressure.append(all_pressure.values)
+            all_time.append(time.values)
+
+    return all_pressure, all_time
+
 
 def calculate_heat_index(data):
     temp_c = data['TEMP©'].dropna()
@@ -273,7 +341,7 @@ def plot_tempandheat4():
     plt.show()
 
 
-def plot_pm25_by_station(data, day):
+def plot_pm25_by_day(data, day):
     plt.figure(figsize=(10,6))
 
     all_pm25, all_time = get_all_pm25(data, day)
@@ -290,4 +358,97 @@ def plot_pm25_by_station(data, day):
     plt.show()
 
 
-plot_pm25_by_station(july16_data, day3)
+def plot_carbondioxide_by_day(data, day):
+    plt.figure(figsize=(10, 6))
+
+    all_carbon, all_time = get_all_carbonDioxide(data, day)
+
+    for (station_name, _), carbondioxide_vals, time_vals in zip(day.items(), all_carbon, all_time):
+        plt.plot(time_vals, carbondioxide_vals, label=station_name)
+
+    plt.title('Carbon Dioxide Levels ')
+    plt.xlabel('Time')
+    plt.ylabel('C02')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# these have issues to fix 
+'''def plot_pm1_by_day(data, day):
+    plt.figure(figsize=(10, 6))
+
+    all_pm1, all_time = get_all_pm1(data, day)
+
+    for (station_name, _), pm1_vals, time_vals in zip(day.items(), all_pm1, all_time):
+        plt.plot(time_vals, pm1_vals, label=station_name)
+
+    plt.title('PM1 Levels Per Station')
+    plt.xlabel('Time')
+    plt.ylabel('PM1')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def plot_pm10_by_day(data, day):
+    plt.figure(figsize=(10, 6))
+
+    all_pm10, all_time = get_all_pm10(data, day)
+
+    for (station_name, _), pm10_vals, time_vals in zip(day.items(), all_pm10, all_time):
+        plt.plot(time_vals, pm10_vals, label=station_name)
+
+    plt.title('PM10 Levels Per Station')
+    plt.xlabel('Time')
+    plt.ylabel('PM10')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def plot_relhum_by_day(data, day):
+    plt.figure(figsize=(10, 6))
+
+    all_relhum, all_time = get_all_relhum(data, day)
+
+    for (station_name, _), relhum_vals, time_vals in zip(day.items(), all_relhum, all_time):
+        plt.plot(time_vals, relhum_vals, label=station_name)
+
+    plt.title('Relative Humidity')
+    plt.xlabel('Time')
+    plt.ylabel('Relative Humidity')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+def plot_pressure_by_day(data, day):
+    plt.figure(figsize=(10, 6))
+
+    all_pressure, all_time = get_all_pressure(data, day)
+
+    for (station_name, _), pressure_vals, time_vals in zip(day.items(), all_pressure, all_time):
+        plt.plot(time_vals, pressure_vals, label=station_name)
+
+    plt.title('Pressure Levels Per Station')
+    plt.xlabel('Time')
+    plt.ylabel('Pressure')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()'''
+
