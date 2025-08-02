@@ -1,7 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-from hires_analysis import stations, violin_plots
+from hires_analysis import violin_plots
 
 data_day_1 = pd.read_csv("C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-14.csv")
 data_day_2 = pd.read_csv("C:\\Users\\Dorian\\HIRES-2025-NYC-Subway-Air-Quality-Project\\data\\1379_2025-7-15.csv")
@@ -35,23 +33,6 @@ day_4 = {
     'st_96' : ("15:36:19", "15:53:12")
     }
 
-all_stations = [
-        day_1["st_125"],
-        day_1["st_42_portauthority"],
-        day_1["barclayCenter"],
-        day_2["st_125_2"],
-        day_2["st_42_bryantpark"],
-        day_2["st_74"],
-        day_2["courtsquare"],
-        day_2["fulton"],
-        day_3["st_137"],
-        day_3["st_225"],
-        day_3["st_242"],
-        day_4["st_72"],
-        day_4["st_86"],
-        day_4["st_96"]
-        ]
-
 days = [day_1, day_2, day_3, day_4]
 
 def get_pm25(data, station):
@@ -60,6 +41,8 @@ def get_pm25(data, station):
 
     startIndex = time[time == station[0]].index.values[0]
     endIndex = time[time == station[1]].index.values[0]
+    print(startIndex, endIndex)
+    print()
 
     sub_pm25 = pm25[startIndex : endIndex + 1]
     sub_time = time[startIndex : endIndex + 1]
@@ -81,21 +64,10 @@ def get_all_pm25(data, stations):
 
 
 
-all_pm25_day_1, all_time_day_1 = get_all_pm25(data_day_1, day_1)
-print(all_pm25_day_1)
-print(all_time_day_1)
-
+all_pm25_day_1, all_time_day_1 = get_all_pm25(data_day_1, day_1) # csv, dict
 all_pm25_day_2, all_time_day_2 = get_all_pm25(data_day_2, day_2)
-print(all_pm25_day_2)
-print(all_time_day_2)
-
 all_pm25_day_3, all_time_day_3 = get_all_pm25(data_day_3, day_3)
-print(all_pm25_day_3)
-print(all_time_day_3)
-
 all_pm25_day_4, all_time_day_4 = get_all_pm25(data_day_4, day_4)
-print(all_pm25_day_4)
-print(all_time_day_4)
 
 all_pm25 = [all_pm25_day_1, all_pm25_day_2, all_pm25_day_3, all_pm25_day_4]
 

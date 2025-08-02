@@ -16,28 +16,16 @@ day_3 = pd.read_csv(file_7_16)
 day_4 = pd.read_csv(file_7_24)
 
 data = day_1
-pm10_day_1 = day_1['PM10'].dropna()
 pm2_day_1 = day_1['PM2.5'].dropna()
-pm1_day_1 = day_1['PM1'].dropna()
-co_day_1 = day_1['CO'].dropna()
 time_day_1 = day_1['Time'].dropna()
 
-pm10_day_2 = day_2['PM10'].dropna()
 pm2_day_2 = day_2['PM2.5'].dropna()
-pm1_day_2 = day_2['PM1'].dropna()
-co_day_2 = day_2['CO'].dropna()
 time_day_2 = day_2['Time'].dropna()
 
-pm10_day_3 = day_3['PM10'].dropna()
 pm2_day_3 = day_3['PM2.5'].dropna()
-pm1_day_3 = day_3['PM1'].dropna()
-co_day_3 = day_3['CO'].dropna()
 time_day_3 = day_3['Time'].dropna()
 
-pm10_day_4 = day_4['PM10'].dropna()
 pm2_day_4 = day_4['PM2.5'].dropna()
-pm1_day_4 = day_4['PM1'].dropna()
-co_day_4 = day_4['CO'].dropna()
 time_day_4 = day_4['Time'].dropna()
 
 def find_mean_day_1(street):
