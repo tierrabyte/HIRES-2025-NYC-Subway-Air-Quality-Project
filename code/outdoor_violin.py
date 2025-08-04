@@ -6,7 +6,7 @@ st_225 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/
 st_242 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-16/188617 2025-07-16 2025-07-17 0-Minute Average.csv')
 
 st_72 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/82031 2025-07-24 2025-07-25 0-Minute Average.csv')
-st_86 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/114761 2025-07-24 2025-07-25 0-Minute Average.csv')
+st_86 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/257889 2025-07-24 2025-07-25 0-Minute Average.csv')
 st_96 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/43527 2025-07-24 2025-07-25 0-Minute Average.csv')
 
 
@@ -22,7 +22,7 @@ day_3 = {
 }
 day_4 = {
     "st_72": ("2025-07-24T14:44:28-04:00", "2025-07-24T15:10:28-04:00"),
-    "st_86": ("2025-07-24T15:13:37-04:00", "2025-07-24T15:33:38-04:00"),
+    "st_86": ("2025-07-24T15:13:47-04:00", "2025-07-24T15:33:47-04:00"), # 257889
     "st_96": ("2025-07-24T15:37:01-04:00", "2025-07-24T15:53:01-04:00"),
 }
 days = [day_3, day_4]
@@ -34,6 +34,10 @@ def get_pm25(data, station):
     end_time = pd.to_datetime(station[1])
     sub_data = data[(data['time_stamp'] >= start_time) & (data['time_stamp'] <= end_time)]
     return sub_data['pm2.5_atm'].dropna(), sub_data['time_stamp'].dropna()
+
+xx_pm25, xx_time_stamps = get_pm25(st_86, day_4['st_86'])
+print(len(xx_pm25))
+print(len(xx_time_stamps))
 
 def get_all_pm25(data_dict, stations):
     all_pm25 = []
