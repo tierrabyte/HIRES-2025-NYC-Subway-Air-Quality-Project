@@ -1,13 +1,13 @@
 import pandas as pd
 from hires_analysis import violin_plots
 
-st_137 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-16/188651 2025-07-16 2025-07-17 0-Minute Average.csv')
-st_225 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-16/140062 2025-07-16 2025-07-17 0-Minute Average.csv')
-st_242 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-16/188617 2025-07-16 2025-07-17 0-Minute Average.csv')
+st_137 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/188651 2025-07-16 2025-07-17 0-Minute Average.csv')
+st_225 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/140062 2025-07-16 2025-07-17 0-Minute Average.csv')
+st_242 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/188617 2025-07-16 2025-07-17 0-Minute Average.csv')
 
-st_72 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/82031 2025-07-24 2025-07-25 0-Minute Average.csv')
-st_86 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/257889 2025-07-24 2025-07-25 0-Minute Average.csv')
-st_96 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir_7-24/43527 2025-07-24 2025-07-25 0-Minute Average.csv')
+st_72 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/82031 2025-07-24 2025-07-25 0-Minute Average.csv')
+st_86 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/257889 2025-07-24 2025-07-25 0-Minute Average.csv')
+st_96 = pd.read_csv('C:/Users/Dorian/HIRES-2025-NYC-Subway-Air-Quality-Project/data/PurpleAir/43527 2025-07-24 2025-07-25 0-Minute Average.csv')
 
 
 # Day -> DataFrames
