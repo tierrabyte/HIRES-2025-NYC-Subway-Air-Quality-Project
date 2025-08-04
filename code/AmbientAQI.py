@@ -100,7 +100,17 @@ def plot_pm25_by_day(stations):
 
 
 def plot_pm25_per_station():
-    plt.figure(figsize=(12, 6))
+    fig, ax = plt.subplots()
+
+    pm25_7_14 , time_7_14 = get_pm25(st_125,day1["st_125"])
+    ax.plot(time_7_14, pm25_7_14)
+    ax.plot(time_7_14, pm25_7_14)
+
+
+
+    pm25_7_15, time_7_15 = get_pm25(st_125_15, day2["st_125_15"])
+    ax.plot(time_7_15, pm25_7_15)
+    ax.plot(time_7_15, pm25_7_15)
 
     plt.title("PM2.5 Levels by Station")
     plt.xlabel("Time")
@@ -109,3 +119,6 @@ def plot_pm25_per_station():
     plt.legend()
     plt.tight_layout()
     plt.show()
+
+
+plot_pm25_per_station()
