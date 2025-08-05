@@ -41,8 +41,6 @@ def get_pm25(data, station):
 
     startIndex = time[time == station[0]].index.values[0]
     endIndex = time[time == station[1]].index.values[0]
-    print(startIndex, endIndex)
-    print()
 
     sub_pm25 = pm25[startIndex : endIndex + 1]
     sub_time = time[startIndex : endIndex + 1]
@@ -61,7 +59,6 @@ def get_all_pm25(data, stations):
             all_time.append(time.values)
 
     return all_pm25, all_time
-
 
 
 all_pm25_day_1, all_time_day_1 = get_all_pm25(data_day_1, day_1) # csv, dict
